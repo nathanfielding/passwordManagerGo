@@ -21,9 +21,11 @@ var createCmd = &cobra.Command{
 	Short: "Creates password for a given application name",
 	Long: `Creates a password for a given application name. 
 	Provides the ability to include special characters and set the length of the password.`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// need to validate that the user has provided a name
-
+	Args: cobra.ExactArgs(1),
+	RunE: func(cmd *cobra.Command, args []string) error {
+		if args[0] == "" {
+			return fmt.Errorf("must provide an application name")
+		}
 		fmt.Printf("Creating a password for %s\n", args[0])
 		chars := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 		if special {
@@ -35,7 +37,13 @@ var createCmd = &cobra.Command{
 		}
 		Passwords[args[0]] = string(password)
 		fmt.Println(Passwords)
+		return nil
 	},
+}
+
+func savePassword(app string) error {
+	// need to check for creating the passwords file
+
 }
 
 func init() {

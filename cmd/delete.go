@@ -14,6 +14,7 @@ var deleteCmd = &cobra.Command{
 	Use:   "delete",
 	Short: "Deletes a password for a given application name",
 	Long:  `Deletes a password for a given application name.`,
+	Args:  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		fmt.Printf("Deleting password for %s\n", args[0])
 		app := args[0]
@@ -21,6 +22,7 @@ var deleteCmd = &cobra.Command{
 		if !ok {
 			return fmt.Errorf("password does not exist for %s", app)
 		}
+		delete(Passwords, app)
 		fmt.Println("Sucessfully deleted password")
 		return nil
 	},

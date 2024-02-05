@@ -4,9 +4,9 @@ This is a CLI tool I am writing to:
 2. Continue learning Go.
 3. Generate and manage passwords as I am terrible about this.
 
-# What is Avaiable?
+# What is Available?
 - Ability to generate passwords for specific applications (not persistent yet)
-- Example: `password create [APPLICATION] -s=true -l=15` where s = special and l = length
+- Example: `password-go create [APPLICATION] -s=true -l=15` where s = special and l = length
 
 # What is on the Horizon?
 - The ability to actually persist passwords between interactions with the tool
