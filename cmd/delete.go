@@ -5,6 +5,7 @@ package cmd
 
 import (
 	"fmt"
+	"passwordManagerGo/pkg"
 
 	"github.com/spf13/cobra"
 )
@@ -18,11 +19,15 @@ var deleteCmd = &cobra.Command{
 	RunE: func(cmd *cobra.Command, args []string) error {
 		fmt.Printf("Deleting password for %s\n", args[0])
 		app := args[0]
-		_, ok := Passwords[app]
+		passwords, err := pkg.LoadPasswords()
+		if err != nil {
+			return err
+		}
+		_, ok := passwords[app]
 		if !ok {
 			return fmt.Errorf("password does not exist for %s", app)
 		}
-		delete(Passwords, app)
+		delete(passwords, app)
 		fmt.Println("Sucessfully deleted password")
 		return nil
 	},

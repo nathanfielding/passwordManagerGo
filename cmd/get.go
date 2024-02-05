@@ -4,9 +4,9 @@ Copyright © 2024 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
-	"encoding/json"
 	"fmt"
-	"os"
+
+	"passwordManagerGo/pkg"
 
 	"github.com/spf13/cobra"
 )
@@ -18,7 +18,7 @@ var getCmd = &cobra.Command{
 	Long:  "Allows you to retrive a single or all passwords",
 	Args:  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		passwords, err := loadPasswords("") // need to figure out where to store file
+		passwords, err := pkg.LoadPasswords()
 		if err != nil {
 			return err
 		}
@@ -40,18 +40,6 @@ var getCmd = &cobra.Command{
 		fmt.Printf("%s: %s", app, v)
 		return nil
 	},
-}
-
-func loadPasswords(filename string) (map[string]string, error) {
-	data, err := os.ReadFile(filename)
-	if err != nil {
-		return nil, err
-	}
-	var passwords map[string]string
-	if err := json.Unmarshal(data, &passwords); err != nil {
-		return nil, err
-	}
-	return passwords, nil
 }
 
 func init() {

@@ -6,6 +6,7 @@ package cmd
 import (
 	"fmt"
 	"math/rand"
+	"passwordManagerGo/pkg"
 
 	"github.com/spf13/cobra"
 )
@@ -35,15 +36,11 @@ var createCmd = &cobra.Command{
 		for i := range password {
 			password[i] = chars[rand.Intn(len(chars))]
 		}
-		Passwords[args[0]] = string(password)
-		fmt.Println(Passwords)
+		if err := pkg.SavePassword(args[0], string(password)); err != nil {
+			return err
+		}
 		return nil
 	},
-}
-
-func savePassword(app string) error {
-	// need to check for creating the passwords file
-
 }
 
 func init() {
